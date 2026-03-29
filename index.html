@@ -1,0 +1,146 @@
+<script>
+const questions = [
+  {
+    question: "Which of these were hardware NOT integrated into my film opener?",
+    answers: ["Microphone", "iPhone", "Computer", "Camera"],
+    correct: 0
+  },
+  {
+    question: "What editing software was primarily used for this film opener?",
+    answers: ["Adobe", "Capcut", "Canva", "Movavi"],
+    correct: 1
+  },
+  {
+    question: "What was the primary benefit of filming on iPhones?",
+    answers: [
+      "Easy accessibility to film clips allowing an easy gateway to editing",
+      "Easier to film with than a traditional camera",
+      "Had better filming quality than most camera types",
+      "Cheaper than a professional camera"
+    ],
+    correct: 0
+  },
+  {
+    question: "What was the best benefit of using Capcut to edit?",
+    answers: [
+      "Better editing quality than most other editing software",
+      "High quality exporting",
+      "Free effects and music to utilize",
+      "Having a bunch of accessible editing features for free"
+    ],
+    correct: 3
+  },
+  {
+    question: "What type of iPhone was used to record?",
+    answers: ["iPhone 17 Pro Max", "iPhone 14 Pro", "iPhone 12", "iPhone 5"],
+    correct: 1
+  },
+  {
+    question: "What was the most used editing feature on Capcut?",
+    answers: [
+      "Using special effects",
+      "Changing the opacity and style of the screen",
+      "Splitting and cutting out scenes for time management",
+      "Using overlays and filters to add aesthetic effects"
+    ],
+    correct: 2
+  },
+  {
+    question: "How did the addition of visual effects impact the piece of media?",
+    answers: [
+      "It didn't impact the piece of media",
+      "It made the scene less bright",
+      "It made the scene look more visually appealing",
+      "It allowed a better visual representation for Detective Stone’s schizophrenia"
+    ],
+    correct: 3
+  },
+  {
+    question: "What was one of the best accessibility features in Capcut?",
+    answers: [
+      "The easy trimming of music, titles, and filming scenes all at once",
+      "The accessible hotbar of various tools",
+      "The limitless library of free sounds and effects",
+      "The easy integration of the film clips into Capcut"
+    ],
+    correct: 0
+  },
+  {
+    question: "What was NOT one of the perks of using the iPhone 14 Pro?",
+    answers: [
+      "Built-in microphone equipment",
+      "Easy sharing and storage of clips",
+      "Easy integration into Capcut",
+      "Limitless storage space"
+    ],
+    correct: 3
+  },
+  {
+    question: "How did using both hardware and software benefit this film opener?",
+    answers: [
+      "It allowed for very high quality filming and editing",
+      "It created the basis needed to produce the media film",
+      "It allowed both basic filming and advanced editing to create an impactful film",
+      "It created scenes with major audience impact"
+    ],
+    correct: 2
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let userAnswers = [];
+
+function loadQuestion() {
+  let q = questions[currentQuestion];
+  document.getElementById("question").innerText = q.question;
+
+  q.answers.forEach((ans, index) => {
+    document.getElementById("btn" + index).innerText = ans;
+  });
+}
+
+function checkAnswer(selected) {
+  userAnswers.push(selected);
+
+  if (selected === questions[currentQuestion].correct) {
+    score++;
+  }
+
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    loadQuestion();
+  } else {
+    showResults();
+  }
+
+  document.getElementById("score").innerText = "Score: " + score;
+}
+
+function showResults() {
+  let output = "<h2>Game Over!</h2>";
+  output += "<h3>Your score: " + score + "/" + questions.length + "</h3>";
+
+  questions.forEach((q, i) => {
+    let userAns = userAnswers[i];
+    let correctAns = q.correct;
+
+    let isCorrect = userAns === correctAns;
+
+    output += "<hr>";
+    output += "<p><strong>Q" + (i + 1) + ": " + q.question + "</strong></p>";
+
+    output += "<p>Your answer: " + q.answers[userAns] + 
+              (isCorrect ? " ✅" : " ❌") + "</p>";
+
+    if (!isCorrect) {
+      output += "<p>Correct answer: " + q.answers[correctAns] + " ✅</p>";
+    }
+  });
+
+  document.getElementById("question-container").innerHTML = output;
+}
+
+loadQuestion();
+</script>
